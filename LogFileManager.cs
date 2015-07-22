@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace LogFileManager
 {
-    class Logging
+    class LogFileManager
     {
 
         // File writer
@@ -20,8 +20,9 @@ namespace LogFileManager
             // If the path to the log file has not been passed in use the location of the exe
             if (logPath == "")
             {
-                logPath = Assembly.GetExecutingAssembly().Location; // Directory path only
-                logPath += "ClearBackupLog.txt";                    // adds the file name
+                logPath = Assembly.GetExecutingAssembly().Location; // Get full path of calling program, this includes filename and extension
+                logPath = Path.GetDirectoryName(logPath);           // This strips the back the filename and extension leaving just the path (no trailing backslash)
+                logPath += "\\" + app + "_Log.txt";                 // adds the required \ and our log file
             }
 
             FileInfo file = new FileInfo(logPath);
@@ -34,8 +35,10 @@ namespace LogFileManager
                 // Build new file name using the date
                 DateTime date = new DateTime();
                 date = DateTime.Today;
+                
                 string archivePath = Assembly.GetExecutingAssembly().Location;
-                archivePath += "ClearOldBackups_Archived_" + date.ToString();
+                archivePath = Path.GetDirectoryName(logPath);
+                archivePath += app + "_Archived_" + date.ToString() + ".txt";
 
                 file.CopyTo(archivePath);
                 sw = new StreamWriter(logPath, false);
@@ -63,7 +66,7 @@ namespace LogFileManager
         }
 
         /*
-         * Provide a method for adding a new even to the log file
+         * Provide a method for adding a new event to the log file
          */ 
         public void AddEvent(string logEvent)
         {
