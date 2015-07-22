@@ -21,7 +21,7 @@ namespace LogFileManager
             if (logPath == "")
             {
                 logPath = Assembly.GetExecutingAssembly().Location; // Get full path of calling program, this includes filename and extension
-                logPath = Path.GetDirectoryName(logPath);           // This strips the back the filename and extension leaving just the path (no trailing backslash)
+                logPath = Path.GetDirectoryName(logPath);           // This strips back the filename and extension leaving just the path (no trailing backslash)
                 logPath += "\\" + app + "_Log.txt";                 // adds the required \ and our log file
             }
 
@@ -36,7 +36,7 @@ namespace LogFileManager
                 DateTime date = new DateTime();
                 date = DateTime.Today;
                 
-                string archivePath = Assembly.GetExecutingAssembly().Location;
+                string archivePath = Assembly.GetExecutingAssembly().Location;  // See comments on line 23!
                 archivePath = Path.GetDirectoryName(logPath);
                 archivePath += app + "_Archived_" + date.ToString() + ".txt";
 
