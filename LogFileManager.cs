@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace LogFileManager
+namespace LFManager
 {
     class LogFileManager
     {
@@ -25,29 +25,37 @@ namespace LogFileManager
                 logPath += "\\" + app + "_Log.txt";                 // adds the required \ and our log file
             }
 
-            FileInfo file = new FileInfo(logPath);
-
-            // Check to see if the log file is getting too large (1 Megabyte)
-            if (file.Length > 1000000)
+            try // Access an existing file
             {
-                // Move existing (large file) to an archived file and start a new log
-                
-                // Build new file name using the date
-                DateTime date = new DateTime();
-                date = DateTime.Today;
-                
-                string archivePath = Assembly.GetExecutingAssembly().Location;  // See comments on line 23!
-                archivePath = Path.GetDirectoryName(logPath);
-                archivePath += app + "_Archived_" + date.ToString() + ".txt";
-
-                file.CopyTo(archivePath);
+                FileInfo file = new FileInfo(logPath);
+    
+                // Check to see if the log file is getting too large (1 Megabyte)
+                if (file.Length > 1000000)
+                {
+                    // Move existing (large file) to an archived file and start a new log
+                    
+                    // Build new file name using the date
+                    DateTime date = new DateTime();
+                    date = DateTime.Today;
+                    
+                    string archivePath = Assembly.GetExecutingAssembly().Location;  // See comments on line 23!
+                    archivePath = Path.GetDirectoryName(logPath);
+                    archivePath += app + "_Archived_" + date.ToString() + ".txt";
+    
+                    file.CopyTo(archivePath);
+                    sw = new StreamWriter(logPath, false);
+                }
+                else // continue adding to file
+                {
+                    sw = new StreamWriter(logPath, true);
+                }
+            }
+            catch (IOExecption)
+            {
+                // File didn't exist, set up a new log file StreamWriter
                 sw = new StreamWriter(logPath, false);
             }
-            else // continue adding to file
-            {
-                sw = new StreamWriter(logPath, true);
-            }
-
+            
             try
             {
                 // Write to the log stipulating the application was started
