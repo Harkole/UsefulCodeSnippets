@@ -1,2 +1,3 @@
 C:\Users\harko\Documents\GitHub\Asp.Net---Learning\Crypto\Crypto\bin\Debug\Crypto.exe.config
 C:\Users\Will\Documents\GitHub\Asp.Net---Learning\Crypto\Crypto\bin\Debug\Crypto.exe.config
+C:\Users\Will\Documents\GitHub\UsefulCodeSnippets\Encryption Management\Crypto\bin\Debug\Crypto.exe.config
