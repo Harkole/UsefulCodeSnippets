@@ -15,7 +15,7 @@ namespace LFManager
          * Create the Event Source (if required). 
          * Create a header to the event log file for each time the service is started.
          */ 
-        public Logging(string app, string logPath = "")
+        public LogFileManager(string app, string logPath = "")
         {
             // If the path to the log file has not been passed in use the location of the exe
             if (logPath == "")
